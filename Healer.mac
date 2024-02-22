@@ -1,13 +1,13 @@
 sub main() 
-/local tank = "Grunk"
 /local tankhealth = GetTankHealth(Tank)
 /target "Grunk"
-if(target.Buff[Strengthen].ID){
+ 
 /cast Strengthen
-}
-if(target.tankhealth <90){
+ 
+/delay 20s
+
 /cast Minor Healing 
-}
+
 /return
 
 /function GetTankHealth(local tname)
