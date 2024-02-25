@@ -1,5 +1,7 @@
 //Healing macro
 
+
+|----------------------------------------
 Sub main() 
 
 |hard coded my tank
@@ -8,52 +10,46 @@ Sub main()
 
 |loops healing until i do /end mac
 /while (1) {
-	/if (${Me.PctMana} > 30) {
-		/call Heal
-	} else {
-	/call Rest
+	/if (${Me.CombatState.Equal[ACTIVE]}) {
+		/if (${Me.PctMana} < 100) /call Rest
+		|put follow here
 	}
-	/delay 3s
+	/if (${Me.PctMana} > 10) /call Heal
 }
 
 /echo ending mac
 /return
-
+|--------------------------------
 	
-	
+|--------------------------------
 | subroutine to heal	
 Sub Heal()
 |debug print if i dont heal
 /if (${Target.PctHPs} >= 90) {
 	/echo health is good. it is ${Target.PctHPs} %
 } else {
-	/while (${Target.PctHPs} < 90) {
-		/echo healing because health is ${Target.PctHPs} %
-		/cast Minor Healing 
-		/delay 3s
-		| check for mana so we dont get stuck
-		/if (${Me.PctMana} < 30) {
-			/echo canceled healing. mana is at ${Me.PctMana} %
-			/return
-		}
-	}
+	/echo healing because health is ${Target.PctHPs} %
+	/cast Minor Healing 
 }
 
+|delay to prevent chat spam
+/delay 3s
 /return
-
+|--------------------------------
+|--------------------------------
 | subroutine to rest
 Sub Rest()
 |if low mana sit around and be a bum
-/sit
-/while (1) {
-	/echo low mana. it is ${Me.PctMana} %
-	/delay 3s
-	/if (${Me.PctMana} > 95) {
-		/stand
-		/echo mana is good. it is ${Me.PctMana} %
-		/return
+/if (${Me.CombatState.Equal[ACTIVE]}) {
+	/sit
+	/while (${Me.PctMana} < 100) {
+		/echo low mana. it is ${Me.PctMana} %
+		/delay 3s
+		}
 	}
-}
-
+/stand
+/echo mana is good. it is ${Me.PctMana} %
 /return
 
+/return
+|--------------------------------
