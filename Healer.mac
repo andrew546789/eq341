@@ -10,12 +10,18 @@ Sub main()
 
 |loops healing until i do /end mac
 |or until we are out of combat
+
 /while (1) {
 	/if (${Me.CombatState.Equal[ACTIVE]}) {
 		/if (${Me.PctMana} < 100) /call Rest
 		|put follow here
 	}
-	/if (${Me.PctMana} > 10) /call Heal
+	/if (${Me.PctMana} > 10) {
+		/call Heal
+	} else {
+		|rest but you might draw aggro
+		/call Rest
+	}
 }
 
 /echo ending mac
@@ -46,12 +52,10 @@ Sub Heal()
 Sub Rest()
 
 |if out of combat be a bum and sit down
-/if (${Me.CombatState.Equal[ACTIVE]}) {
-	/sit
-	/while (${Me.PctMana} < 100) {
-		/echo low mana. it is ${Me.PctMana} %
-		/delay 3s
-		}
+/sit
+/while (${Me.PctMana} < 100) {
+	/echo low mana. it is ${Me.PctMana} %
+	/delay 3s
 	}
 /stand
 /echo mana is good. it is ${Me.PctMana} %
