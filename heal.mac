@@ -1,0 +1,46 @@
+//Healing macro
+
+Sub main() 
+
+|hard coded my tank
+/target "Forknight"
+/echo Starting mac
+
+|loops healing until i do /end mac
+/while (1) {
+	/if (${Me.CombatState.Equal[ACTIVE]}) {
+		/if (${Me.PctMana} < 100) /call Rest
+		|put follow here
+	}
+	/if (${Me.PctMana} > 10) /call Heal
+}
+|end mac if 1 != 1
+/echo ending mac
+/return
+	
+| subroutine to heal	
+Sub Heal()
+|debug print if i dont heal
+/if (${Target.PctHPs} >= 90) {
+	/echo health is good. it is ${Target.PctHPs} %
+} else {
+	/echo healing because health is ${Target.PctHPs} %
+	/cast Minor Healing 
+}
+|delay to prevent chat spam
+/delay 3s
+/return
+
+| subroutine to rest
+Sub Rest()
+|if you can rest, then if you need mana, rest
+/if (${Me.CombatState.Equal[ACTIVE]}) {
+	/sit
+	/while (${Me.PctMana} < 100) {
+		/echo low mana. it is ${Me.PctMana} %
+		/delay 3s
+		}
+	}
+/stand
+/echo mana is good. it is ${Me.PctMana} %
+/return
