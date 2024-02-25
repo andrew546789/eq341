@@ -14,16 +14,19 @@ Sub main()
 /while (1) {
 	/if (${Me.CombatState.Equal[ACTIVE]}) {
 		/if (${Me.PctMana} < 100) /call Rest
-		|put follow here
+		|call Rest
 	}
 	/if (${Me.PctMana} > 10) {
 		/call Heal
+		|call Buff
+		|delay to prevent chat spam
+		/delay 3s
 	} else {
 		|rest but you might draw aggro
 		/call Rest
 	}
 }
-
+|ends macro when 1 != 1 (VERY IMPORTANT!!!)
 /echo ending mac
 /return
 |--------------------------------------------------------------
@@ -40,9 +43,6 @@ Sub Heal()
 	/echo healing because health is ${Target.PctHPs} %
 	/cast Minor Healing 
 }
-
-|delay to prevent chat spam
-/delay 3s
 /return
 |--------------------------------------------------------------
 
