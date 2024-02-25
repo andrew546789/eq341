@@ -49,6 +49,7 @@ Sub Rest()
 	/echo low mana. it is ${Me.PctMana} %
 	/delay 3s
 	/if (${Me.PctMana} > 90) {
+		/stand
 		/echo mana is good. it is ${Me.PctMana} %
 		/return
 	}
