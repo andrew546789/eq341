@@ -1,15 +1,15 @@
 sub main() 
-/local tankhealth = GetTankHealth(Tank)
-/target "Grunk"
+/local tankhealth = GetTankHealth()
+/target group2
  
 /cast Strengthen
  
-/delay 20s
+/delay 3s
 
 /cast Minor Healing 
 
 /return
 
-/function GetTankHealth(local tname)
-	/local tnkh = GetUnitHealth(tname)
+/function GetTankHealth()
+	/local tnkh = GetUnitHealth(group2)
 	/return tnkh
