@@ -19,7 +19,7 @@ Sub main()
 	}
 	/if (${Me.PctMana} > 10) {
 		/call Heal
-		|call Buff
+		/if ((${Me.PctMana} > 90) && (${Target.PctHPs} >= 90)) /call Buth
 		|delay to prevent chat spam
 		/delay 3s
 	} else {
