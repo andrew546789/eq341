@@ -56,7 +56,7 @@ Sub Rest()
 /while (${Me.PctMana} < 100) {
 	/echo low mana. it is ${Me.PctMana} %
 	/delay 3s
-	}
+}
 /stand
 /echo mana is good. it is ${Me.PctMana} %
 /return
