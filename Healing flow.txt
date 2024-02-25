@@ -1,0 +1,32 @@
+﻿Healing (used)
+Healers are essential for keeping the tank in the fight so healing your party is a very important algorithm.
+
+
+1. Once the tank has regrouped with you, stay near them. See next step.
+2. Keep an eye on how many enemies there are in this fight along with their levels. If 3 or more enemies are in this fight, if mana is so low that you are unable to cast healing or buffing spells while still in combat or if a high level boss or enemy is approaching see step 9, else go to the next step.
+3. Check for any active buffing spells. if all buff spells are active  go to step 5, else go to the next step.
+4. If buff spells aren’t active on the tank, cast a buff spell (I.E. Strength) if you have mana go to next step, else go to step 7
+5. Check tank health if below 70, go to the next step else return to step 2.
+6. Cast healing spell on tank, if you still have mana to cast spells return to step 2, if combat is over go to step 8 else see next step
+7. Check combat status if out of combat sit until mana and health are restored and move to the next step. 
+
+
+
+
+
+
+Healing
+Healers are essential for keeping the tank in the fight so healing your party is a very important algorithm.
+
+
+1. Once the tank has regrouped with you, stay near them. See next step.
+2. Keep an eye on how many enemies there are in this fight along with their levels. If 3 or more enemies are in this fight, if mana is so low that you are unable to cast healing or buffing spells while still in combat or if a high level boss or enemy is approaching see step 9, else go to the next step.
+3. Check for any active buffing spells. if all buff spells are active  go to step 5, else go to the next step.
+4. If buff spells aren’t active on the tank, cast a buff spell (I.E. Strength) if you have mana go to next step, else go to step 7
+5. Check tank health if below 70, go to the next step else return to step 2. if combat is over go to step 8
+6. Cast healing spell on tank, if you still have mana to cast spells return to step 2, if combat is over go to step 8 else see next step
+7. Check combat status if out of combat sit until mana and health are restored and move to the next step. If in combat and health above 40, repeat step 7. If in combat and tank health below 40 go to step 9.
+8. While out of combat stay in this location until the tank returns to step 2.
+9. Begin running to a location with friendly NPCs as they will assist with getting rid of the attacking enemies. If such a location doesn’t exist, leave the zone. See next step.
+10. Sit and restore health/mana in this safe location then join the tank on the journey to the next combat location.
+8. 9. While out of combat stay in this location until the tank returns to step 2.
