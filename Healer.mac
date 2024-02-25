@@ -60,6 +60,4 @@ Sub Rest()
 /stand
 /echo mana is good. it is ${Me.PctMana} %
 /return
-
-/return
 |--------------------------------------------------------------
