@@ -4,8 +4,10 @@
 |--------------------------------------------------------------
 Sub main() 
 
+|call spellset for healing
+/memspellset defheal
 |hard coded my tank
-/target "Forknight"
+/target "jabopie"
 /echo Starting mac
 /follow
 
