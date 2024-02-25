@@ -1,63 +1,72 @@
 //Healing macro
 
-
-|--------------------------------------------------------------
 Sub main() 
 
 |hard coded my tank
-/target "Jabopie"
+/target "Grunk"
 /echo Starting mac
+/follow
 
 |loops healing until i do /end mac
-|or until we are out of combat
-
 /while (1) {
-	/if (${Me.CombatState.Equal[ACTIVE]}) {
-		/if (${Me.PctMana} < 100) /call Rest
-		|call Rest
-	}
-	/if (${Me.PctMana} > 10) {
+	/if (${Me.PctMana} > 30) {
+		/call Buth
 		/call Heal
-		|call Buff
-		|delay to prevent chat spam
-		/delay 3s
 	} else {
-		|rest but you might draw aggro
-		/call Rest
+	/call Rest
 	}
+	/delay 3s
 }
-|ends macro when 1 != 1 (VERY IMPORTANT!!!)
+
 /echo ending mac
 /return
-|--------------------------------------------------------------
+
 	
 	
-|--------------------------------------------------------------
 | subroutine to heal	
 Sub Heal()
-
 |debug print if i dont heal
 /if (${Target.PctHPs} >= 90) {
 	/echo health is good. it is ${Target.PctHPs} %
 } else {
-	/echo healing because health is ${Target.PctHPs} %
-	/cast Minor Healing 
+	/while (${Target.PctHPs} < 90) {
+		/echo healing because health is ${Target.PctHPs} %
+		/cast Minor Healing 
+		/delay 3s
+		| check for mana so we dont get stuck
+		/if (${Me.PctMana} < 30) {
+			/echo canceled healing. mana is at ${Me.PctMana} %
+			/return
+		}
+	}
 }
+
 /return
-|--------------------------------------------------------------
 
-
-|--------------------------------------------------------------
 | subroutine to rest
 Sub Rest()
-
-|if out of combat be a bum and sit down
+|if low mana sit around and be a bum
+/afollow off
 /sit
-/while (${Me.PctMana} < 100) {
+/while (1) {
 	/echo low mana. it is ${Me.PctMana} %
 	/delay 3s
+	/if (${Me.PctMana} > 90) {
+		/stand
+		/echo mana is good. it is ${Me.PctMana} %
+		/return
+	}
+
 }
-/stand
-/echo mana is good. it is ${Me.PctMana} %
+/follow
 /return
-|--------------------------------------------------------------
+
+|Subroutine to buff
+Sub Buth()
+|casts Buff
+/if (!${Target.Buff[Strength].ID} && ${Target.Distance} < 30) {
+	/echo Strengthening
+	/cast Strength
+	/delay 3s
+}
+	/return
