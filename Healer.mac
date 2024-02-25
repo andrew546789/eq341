@@ -7,6 +7,7 @@ Sub main()
 |hard coded my tank
 /target "Jabopie"
 /echo Starting mac
+/follow
 
 |loops healing until i do /end mac
 |or until we are out of combat
@@ -52,6 +53,7 @@ Sub Heal()
 Sub Rest()
 
 |if out of combat be a bum and sit down
+/afollow off
 /sit
 /while (${Me.PctMana} < 100) {
 	/echo low mana. it is ${Me.PctMana} %
@@ -59,5 +61,19 @@ Sub Rest()
 }
 /stand
 /echo mana is good. it is ${Me.PctMana} %
+/follow
 /return
+|--------------------------------------------------------------
+
+
+|--------------------------------------------------------------
+|Subroutine to buff
+Sub Buth()
+|casts Buff
+/if (!${Target.Buff[Strength].ID} && ${Target.Distance} < 30) {
+	/echo Strengthening
+	/cast Strength
+	/delay 3s
+}
+	/return
 |--------------------------------------------------------------
