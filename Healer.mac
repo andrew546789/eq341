@@ -1,15 +1,23 @@
-sub main() 
-/local tankhealth = GetTankHealth()
-/target group2
- 
-/cast Strengthen
- 
-/delay 3s
+//Healing macro
 
-/cast Minor Healing 
+Sub main() 
 
+/target "Jabopie"
+/echo Starting mac
+/while (1) {
+	/call Heal
+}
+/echo ending mac
 /return
 
-/function GetTankHealth()
-	/local tnkh = GetUnitHealth(group2)
-	/return tnkh
+	
+	
+	
+Sub Heal()
+
+/while (${Target.PctHPs} < 100) {
+	/echo healing
+	/delay 3s
+	/cast Minor Healing 
+}
+/return
