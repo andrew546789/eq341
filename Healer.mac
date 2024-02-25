@@ -2,11 +2,16 @@
 
 Sub main() 
 
+//hard coded my tank
 /target "Jabopie"
 /echo Starting mac
+
+//loops healing until i do /end mac
 /while (1) {
 	/call Heal
+	/delay 3s
 }
+
 /echo ending mac
 /return
 
@@ -15,9 +20,15 @@ Sub main()
 	
 Sub Heal()
 
-/while (${Target.PctHPs} < 100) {
-	/echo healing
-	/delay 3s
-	/cast Minor Healing 
+//debug print if i dont heal
+/if (${Target.PctHPs} >= 90) {
+	/echo health is good. it is ${Target.PctHPs}
+} else {
+	/while (${Target.PctHPs} < 90) {
+		/echo healing because health is ${Target.PctHPs}
+		/cast Minor Healing 
+		/delay 3s
+	}
 }
+
 /return
