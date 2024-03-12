@@ -11,22 +11,31 @@ local function main()
 		if --active combat state
 			if mq.TLO.me.PctMana < 100--i think
 				rest()
+				end
+			end
 		if mq.TLO.me.PctMana > 10
 			heal()
 			if (mq.TLO.me.PctMana >= 50) and (mq.TLO.Target.PctHPs >=)
 				buff()
+				end
 			mq.delay(3000)
+			end
 		else
 			rest()
-	return
+			end
+		end
+	end
+	
 			
 local function heal()
 	if mq.TLO.Target.PctHPs >= 90
 		print("health is good. it is" + mq.TLO.Target.PctHPs)
+		end
 	else
 		print("healing because health is" + mq.TLO.Target.PctHPs)
 		--cast healing
-	return
+		end
+	end
 
 local function rest()
 	--turn follow off
@@ -34,16 +43,19 @@ local function rest()
 	while mq.TLO.me.PctMana < 99
 		if (mq.TLO.Target.PctHPs < 50) and (mq.TLO.me.PctMana > 10)
 			heal()
+			end
 		mq.delay(3000)
+		end
 	--stand
 	--continue following
-	return
+	end
 
 local function buff()
 	if (not --${Target.Buff[Strength].ID}-- ) and --${Target.Distance}-- < 30 )
 		print("buffing")
 		--cast buff
-	return
+		end
+	end
 
 local terminate = false
 mq.bind('/assend', function() terminate = true end)
