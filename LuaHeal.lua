@@ -1,63 +1,61 @@
 local mq = require('mq')
 
-local function main()
+function main()
 -- put memspellset here
-	local tank = "jabopie"
-	--mq.TLO.target
-	print("starting mac")
+    local tank = "jabopie"
+    --mq.TLO.target
+    print("starting mac")
 --start following tank here
 
-	--while loop to heal and do stuff
-	while 1 do 
-		if mq.TLO.Me.CombatState.Equal[ACTIVE] then
-			if mq.TLO.Me.PctMana() < 100 then
-				rest()
-			end
-		end
-		if mq.TLO.Me.PctMana() > 10 then
-			heal()
-			if (mq.TLO.Me.PctMana() >= 50) and (mq.TLO.Target.PctHPs() >= 90) then
-				buff()
-			end
-			mq.delay(3000)
-		else
-			rest()
-		end
-	end
+    --while loop to heal and do stuff
+    while 1 do 
+        pctHps = tonumber(mq.TLO.Target.PctHPs())
+        pctMana = mq.TLO.Me.PctMana()
+        if mq.TLO.Me.CombatState.Equal[ACTIVE] then
+            if pctMana < 100 then
+                rest()
+            end
+        end
+        if pctMana > 10 then
+            heal()
+            if (pctMana >= 50) and (pctHPs >= 90) then
+                buff()
+            end
+            mq.delay(3000)
+        else
+            rest()
+        end
+    end
 end
 
-	
-			
-local function heal()
-	if mq.TLO.Target.PctHPs() >= 90 then
-		print("health is good. it is" + mq.TLO.Target.PctHPs())
-	else
-		print("healing because health is" + mq.TLO.Target.PctHPs())
-		--cast healing
-	end
-	return 0
+function heal()
+pctHPs = tonumber(mq.TLO.Target.PctHPs())
+    if pctHPs <= 90 then
+        print("health is good. it is"..pctHPs)
+    else
+        print("healing because health is"..pctHPs)
+        --cast healing
+    end
 end
 
-local function rest()
-	--turn follow off
-	--sit
-	while mq.TLO.Me.PctMana() < 99 do
-		if (mq.TLO.Target.PctHPs() < 50) and (mq.TLO.Me.PctMana() > 10) then
-			heal()
-		end
-		mq.delay(3000)
-	end
-	--stand
-	--continue following
-	return 0
+function rest()
+    --turn follow off
+    --sit
+    while pctMana < 99 do
+        if (pctHPs < 50) and (pctMana > 10) then
+            heal()
+        end
+        mq.delay(3000)
+    end
+    --stand
+    --continue following
 end
 
-local function buff()
-	if (not mq.TLO.Target.Distance() < 30 ) then --mq.TLO.Target.Buff[Strength].ID--
-		print("buffing")
-		--cast buff
-	end
-	return 0
+function buff()
+    if (mq.TLO.Target.Distance() < 30 ) then --mq.TLO.Me.Target.Buff[Strength].ID ) and
+        print("buffing")
+        --cast buff
+    end
 end
 
 local terminate = false
