@@ -4,6 +4,10 @@ function main()
     local tank = "Grunk"
     local dps ="PatBenatar"
     local count = 0
+    local bufSpel ="Strengthen"
+    local atacSpel = "Burst of Flame"
+    local helSpel = "Minor Healing"
+    local debSpel = "Disempower"
     mq.cmd("/target "..tank)
     print("starting mac")
 --start following tank here
@@ -22,60 +26,63 @@ function main()
 
         if mq.TLO.Me.CombatState.Equal[ACTIVE] then
             if pctMana < 100 then
-                rest()
+                rest(pctHps, pctMana)
             end
         end
         if pctMana > 10 then
-            heal()
+            heal(helSpel)
             if (pctMana >= 50) and (pctHPs >= 90) then
-                buff()
+                buff(bufSpel)
             end
             mq.delay(3000)
         else
             rest()
         end
-        --if(mq.TLC.Me.XTarget() >0 and (pctMana >=37)) then
-       --     hurt()
-        --end
+        if(mq.TLO.Me.XTarget() >0 and (pctMana >=50)) then
+            hurt(debSpel,atacSpel)
+        end
         count= count+1
 
 
 
     end
 end
-function heal()
-pctHPs = tonumber(mq.TLO.Target.PctHPs())
+function heal(helSpel)
+
+    pctHPs = tonumber(mq.TLO.Target.PctHPs())
     if pctHPs >= 90 then
         print("health is good. it is"..pctHPs)
     else
         print("healing because health is"..pctHPs)
-        mq.cmd("/cast Healing")
+        mq.cmd("/cast ".. helSpel)
     end
 end
-function rest()
+function rest(pctHPs, pctMana)
     --turn follow off
-    --sit
-    while pctMana < 99 do
+    mq.cmd("/sit")
+    while pctMana < 99 do --STUCK IN LOOP HERE
         if (pctHPs < 50) and (pctMana > 10) then
             heal()
         end
         mq.delay(3000)
     end
-    --stand
+    mq.cmd("/stand")
     --continue following
 end
-function buff()
+function buff(bufSpel)
     if (mq.TLO.Target.Distance() < 30 ) then --mq.TLO.Me.Target.Buff[Strength].ID ) and
         print("buffing")
-        mq.cmd("/cast Strengthen")
+        mq.cmd("/cast ".. bufSpel)
 
     end
 end
 
-function hurt()
+function hurt(debSpel, atacSpel)
     print()
     mq.cmd("/assist")
-    mq.cmd("/cast Careless Lightning")
+    mq.cmd("/cast ".. debSpel)
+    mq.delay(3000)
+    mq.cmd("/cast ".. atacSpel)
 end
 local terminate = false
 mq.bind('/assend', function() terminate = true end)
