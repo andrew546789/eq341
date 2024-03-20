@@ -4,9 +4,9 @@ function main()
     local tank = "Grunk"
     local dps ="PatBenatar"
     local count = 0
-    local bufSpel ="Strengthen"
-    local atacSpel = "Burst of Flame"
-    local helSpel = "Minor Healing"
+    local bufSpel ="Frenzy"
+    local atacSpel = "Frost rift"
+    local helSpel = "Healing"
     local debSpel = "Disempower"
     mq.cmd("/target "..tank)
     print("starting mac")
@@ -36,9 +36,9 @@ function main()
             end
             mq.delay(3000)
         else
-            rest()
+            rest(pctHps, pctMana, helSpel)
         end
-        if(mq.TLO.Me.XTarget() >0 and (pctMana >=50)) then
+        if((mq.TLO.Me.XTarget() >0) and (pctMana >=50)) then
             hurt(debSpel,atacSpel)
         end
         count= count+1
@@ -57,20 +57,24 @@ function heal(helSpel)
         mq.cmd("/cast ".. helSpel)
     end
 end
-function rest(pctHPs, pctMana)
-    --turn follow off
+function rest(pctHPs, pctMana helSpel)
+    
+    mq.cmd("/afollow off")
     mq.cmd("/sit")
-    while pctMana < 99 do --STUCK IN LOOP HERE
+    while pctMana < 99 do
         if (pctHPs < 50) and (pctMana > 10) then
-            heal()
+            heal(helSpel)
         end
         mq.delay(3000)
+    pctMana = mq.TLO.Me.PctMana()
+    pctHps = tonumber(mq.TLO.Target.PctHPs())
     end
     mq.cmd("/stand")
-    --continue following
+    mq.cmd("/follow")
+end
 end
 function buff(bufSpel)
-    if (mq.TLO.Target.Distance() < 30 ) then --mq.TLO.Me.Target.Buff[Strength].ID ) and
+    if (mq.TLO.Target.Distance() < 30 ) and not (mq.TLO.Target.Buff[Strength].ID()) then
         print("buffing")
         mq.cmd("/cast ".. bufSpel)
 
