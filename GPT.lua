@@ -1,6 +1,6 @@
 local mq = require('mq')
 function main()
--- put memspellset here
+	mq.cmd("/memspellset def")
     local tank = "Grunk"
     local dps ="PatBenatar"
     local count = 0
@@ -95,4 +95,5 @@ if not terminate then
     main()
     mq.delay(1000) -- equivalent to '1s'
 end
+
 
