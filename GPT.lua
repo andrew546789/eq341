@@ -1,17 +1,16 @@
 local mq = require('mq')
 function main()
-	mq.cmd("/memspellset def")
-	mq.delay(6000)
-    local tank = "jabopie"
-    local dps ="jaboopie"
+-- put memspellset here
+    local tank = "Grunk"
+    local dps ="PatBenatar"
     local count = 0
-    local bufSpel ="Courage"
-    local atacSpel = "Burst of Flame"
-    local helSpel = "Minor Healing"
+    local bufSpel ="Frenzy"
+    local atacSpel = "Frost rift"
+    local helSpel = "Healing"
     local debSpel = "Disempower"
     mq.cmd("/target "..tank)
     print("starting mac")
-	mq.cmd("/follow")
+--start following tank here
 
     --while loop to heal and do stuff
     while 1 do 
@@ -21,7 +20,7 @@ function main()
         else
             mq.cmd("/target "..dps)
         end
-
+        mq.cmd("/follow")
         pctHps = tonumber(mq.TLO.Target.PctHPs())
         pctMana = mq.TLO.Me.PctMana()
 
@@ -37,9 +36,9 @@ function main()
             end
             mq.delay(3000)
         else
-            rest()
+            rest(pctHps, pctMana, helSpel)
         end
-        if(mq.TLO.Me.XTarget() >0 and (pctMana >=50)) then
+        if((mq.TLO.Me.XTarget() >0) and (pctMana >=50)) then
             hurt(debSpel,atacSpel)
         end
         count= count+1
@@ -52,30 +51,30 @@ function heal(helSpel)
 
     pctHPs = tonumber(mq.TLO.Target.PctHPs())
     if pctHPs >= 90 then
-        print("health is good. it is "..pctHPs)
+        print("health is good. it is"..pctHPs)
     else
-        print("healing because health is "..pctHPs)
+        print("healing because health is"..pctHPs)
         mq.cmd("/cast ".. helSpel)
     end
 end
-
-function rest(pctHPs, pctMana)
-    mq.cmd("/follow")
+function rest(pctHPs, pctMana helSpel)
+    
+    mq.cmd("/afollow off")
     mq.cmd("/sit")
-    while pctMana < 99 do --STUCK IN LOOP HERE
+    while pctMana < 99 do
         if (pctHPs < 50) and (pctMana > 10) then
-            heal()
-		elseif (pctMana >= 95) then
-			return
+            heal(helSpel)
         end
         mq.delay(3000)
+    pctMana = mq.TLO.Me.PctMana()
+    pctHps = tonumber(mq.TLO.Target.PctHPs())
     end
     mq.cmd("/stand")
     mq.cmd("/follow")
 end
-
+end
 function buff(bufSpel)
-    if (mq.TLO.Target.Distance() < 30 ) then --mq.TLO.Me.Target.Buff[Strength].ID ) and
+    if (mq.TLO.Target.Distance() < 30 ) and not (mq.TLO.Target.Buff[Strength].ID()) then
         print("buffing")
         mq.cmd("/cast ".. bufSpel)
 
@@ -89,11 +88,11 @@ function hurt(debSpel, atacSpel)
     mq.delay(3000)
     mq.cmd("/cast ".. atacSpel)
 end
-
 local terminate = false
 mq.bind('/assend', function() terminate = true end)
 
 if not terminate then
     main()
-    mq.delay(1000) 
+    mq.delay(1000) -- equivalent to '1s'
 end
+
