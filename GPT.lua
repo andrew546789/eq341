@@ -4,13 +4,13 @@ function main()
     local tank = "Grunk"
     local dps ="PatBenatar"
     local count = 0
-    local bufSpel ="Frenzy"
+    local bufdefSpel="Protect"
+	local bufatkSpel="Burst of Strength"
     local atacSpel = "Frost rift"
     local helSpel = "Healing"
-    local debSpel = "Disempower"
+    local debSpel = "Walking Sleep"
     mq.cmd("/target "..tank)
     print("starting mac")
---start following tank here
 
     --while loop to heal and do stuff
     while 1 do 
@@ -76,7 +76,11 @@ end
 function buff(bufSpel)
     if (mq.TLO.Target.Distance() < 30 ) and not (mq.TLO.Target.Buff[Strength].ID()) then
         print("buffing")
-        mq.cmd("/cast ".. bufSpel)
+        mq.cmd("/cast ".. bufatkSpel)
+		if not (mq.TLO.Target.Buff[Protect].ID()) then
+			mq.cmd("/cast ".. bufdefSpel)
+		end
+		
 
     end
 end
