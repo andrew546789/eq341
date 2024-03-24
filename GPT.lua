@@ -5,7 +5,7 @@ function main()
     local dps ="PatBenatar"
     local count = 0
     local bufdefSpel="Protect"
-	local bufatkSpel="Burst_Of_Strength"
+	local bufatkSpel="Burst of Strength"
     local atacSpel = "Frost rift"
     local helSpel = "Healing"
     local debSpel = "Walking Sleep"
@@ -86,8 +86,6 @@ function buff(bufSpel)
         end
     end
 end
-
-
 
 function hurt(debSpel, atacSpel)
     print()
