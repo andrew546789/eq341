@@ -5,7 +5,7 @@ function main()
     local dps ="PatBenatar"
     local count = 0
     local bufdefSpel="Protect"
-	local bufatkSpel="Burst of Strength"
+	local bufatkSpel="Burst_Of_Strength"
     local atacSpel = "Frost rift"
     local helSpel = "Healing"
     local debSpel = "Walking Sleep"
@@ -73,17 +73,21 @@ function rest(pctHPs, pctMana helSpel)
     mq.cmd("/follow")
 end
 end
-function buff(bufSpel)
-    if (mq.TLO.Target.Distance() < 30 ) and not (mq.TLO.Target.Buff[Strength].ID()) then
-        print("buffing")
-        mq.cmd("/cast ".. bufatkSpel)
-		if not (mq.TLO.Target.Buff[Protect].ID()) then
-			mq.cmd("/cast ".. bufdefSpel)
-		end
-		
 
+function buff(bufSpel)
+    if (mq.TLO.Target.Distance() < 30 ) then
+        if not (mq.TLO.Target.Buff[Protect].ID()) then
+    print("buffing def")
+        mq.cmd("/cast "..bufdefSpel)
+        end
+        if not (mq.TLO.Target.Buff("Burst Of Strength").ID()) then
+    print("buffing atk")
+        mq.cmd("/cast "..bufatkSpel)
+        end
     end
 end
+
+
 
 function hurt(debSpel, atacSpel)
     print()
