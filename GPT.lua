@@ -5,7 +5,7 @@ function main()
     local dps ="PatBenatar"
     local count = 0
     local bufdefSpel="Protect"
-	local bufatkSpel="Burst of Strength"
+	local bufatkSpel="Burst Of Strength"
     local atacSpel = "Frost rift"
     local helSpel = "Healing"
     local debSpel = "Walking Sleep"
