@@ -1,6 +1,6 @@
 local mq = require('mq')
 function main()
-	mq.cmd("/memspellset lvl20")
+    mq.cmd("/memspellset lvl20")
     local tank = "Forknight"
     local dps ="Forknight"
     local count = 0
@@ -15,6 +15,7 @@ function main()
 
     --while loop to heal and do stuff
     while 1 do 
+        mq.cmd("/afollow off")
         local order= count % 2
         if( order== 0)then 
             mq.cmd("/target "..tank)
@@ -24,8 +25,8 @@ function main()
         mq.cmd("/follow")
         pctHps = tonumber(mq.TLO.Target.PctHPs())
         pctMana = tonumber(mq.TLO.Me.PctMana())
-
-        if mq.TLO.Me.CombatState.Equal[ACTIVE] and pctMana < 100 then
+        print(mq.TLO.Me.XTarget())
+        if (mq.TLO.Me.XTarget() <=0) and pctMana < 100 then
             rest(pctHps, pctMana)
         end
         if pctMana > 10 then
@@ -62,15 +63,13 @@ function heal(helSpel,lhelSpel)
 end
 function rest(pctHPs, pctMana ,helSpel ,lhelSpel)
     mq.cmd("/afollow off")
-    while pctMana < 99 do
-    if not (mq.TLO.Me.State.Equal[SIT]) then
-        mq.cmd("/sit")
-    end
+    mq.cmd("/sit")
+    while (pctMana < 99) and (mq.TLO.Me.XTarget() <=0) do
     print("resting")
         if (pctHPs < 50) and (pctMana > 10) then
             heal(helSpel,lhelSpel)
         end
-        mq.delay(3000)
+        mq.delay(5000)
     pctMana = mq.TLO.Me.PctMana()
     pctHps = tonumber(mq.TLO.Target.PctHPs())
     end
@@ -84,10 +83,12 @@ function buff(bufdefSpel,bufatkSpel)
         if not (mq.TLO.Target.Buff[Protect].ID()) then
     	    print("buffing def")
             mq.cmd("/cast "..bufdefSpel)
+            mq.delay(6500)
         end
         if not (mq.TLO.Target.Buff("Burst Of Strength").ID()) then
     	    print("buffing atk")
             mq.cmd("/cast "..bufatkSpel)
+            mq.delay(1000)
         end
     end
 end
@@ -96,7 +97,7 @@ function hurt(debSpel, atacSpel)
     print()
     mq.cmd("/assist")
     mq.cmd("/cast ".. debSpel)
-    mq.delay(3000)
+    mq.delay(3500)
     mq.cmd("/cast ".. atacSpel)
     mq.delay(3000)
 end
