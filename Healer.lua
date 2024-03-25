@@ -1,3 +1,4 @@
+--Healer code by Seth Vossler, Andrew Vossler and Hayden Cahill
 local mq = require('mq')
 function main()
     mq.cmd("/memspellset lvl20")
@@ -47,6 +48,8 @@ function main()
 
     end
 end
+
+-- heal function (will be the main called function at 50 mana)
 function heal(helSpel,lhelSpel)
 
     pctHPs = tonumber(mq.TLO.Target.PctHPs())
@@ -61,6 +64,8 @@ function heal(helSpel,lhelSpel)
 	end
     end
 end
+
+--sits the healer down outside of combat (in combat is sit wait 5 sec, stand)
 function rest(pctHPs, pctMana ,helSpel ,lhelSpel)
     mq.cmd("/afollow off")
     mq.cmd("/sit")
@@ -78,6 +83,7 @@ mq.cmd("/stand")
 mq.cmd("/follow")
 end
 
+-- casts a long term and short term buf if the target lacks either
 function buff(bufdefSpel,bufatkSpel)
     if (mq.TLO.Target.Distance() < 30 ) then
         if not (mq.TLO.Target.Buff[Protect].ID()) then
@@ -92,7 +98,7 @@ function buff(bufdefSpel,bufatkSpel)
         end
     end
 end
-
+--targets the allies target, debuffs the enemy and casts an attack spell for it
 function hurt(debSpel, atacSpel)
     print()
     mq.cmd("/assist")
